@@ -54,6 +54,17 @@ public class TestBoundaryWalk {
         assertTrue(t[0] == t[2] && t[1] == t[3]);
     }
 
+    @Test
+    public void testRotationAfterWallCounterclockwise() {
+        System.out.println("TestBoundaryWalk | testRotationAfterWallCounterclockwise ");
+        String feedbacks = appl.walkBoundary("counterclockwise", 500);
+        char feedback[] = divideFeedbacks(feedbacks);
+        for(int i=0; i<feedback.length; i++) {
+            if (feedback[i] == 'w' && i != feedback.length - 1)
+                assertTrue(feedback[i+1] == 'l');
+        }
+    }
+
     private int countWallsFromFeedbacks(String f) {
         int walls = 0;
         for (int i=0; i<f.length(); i++)
@@ -76,6 +87,18 @@ public class TestBoundaryWalk {
         for (int i=0; i<sideFeedback.length(); i++)
             sideTime = sideFeedback.charAt(i) == 'f' ? sideTime + 1 : sideTime;
         return sideTime;
+    }
+
+    private char[] divideFeedbacks(String f) {
+        char result[] = new char[f.length()];
+        int j = 0;
+        for (int i=0; i<f.length(); i++) {
+            if (f.charAt(i) != '-') {
+                result[j] = f.charAt(i);
+                j++;
+            }
+        }
+        return  result;
     }
 
 }
